@@ -1,0 +1,22 @@
+# Local runtime and installed dependencies
+.venv/
+node_modules/
+
+# Downloaded model weights and caches
+models/
+*.pth
+*.pt
+
+# User-uploaded source images, generated images and runtime task data
+data/
+
+# Local logs, QA artifacts and generated temporary files
+*.log
+qa_*/
+codex-app-server-schema/
+__pycache__/
+.DS_Store
+
+# Local Word build helper; the management document is delivered separately
+build_boss_brief.py
+design-qa.md

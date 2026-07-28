@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>商品图工作台</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body class="studio-page">
+  <header class="studio-top">
+    <a href="/" class="brand">PIE <span>/</span> STUDIO</a>
+    <div id="job-meta">正在载入任务…</div>
+    <a href="/" class="new-task">新建任务</a>
+  </header>
+
+  <main class="workspace-shell">
+    <aside class="source-dock" aria-label="商品参考图">
+      <div class="dock-head"><b>商品参考图</b><span id="source-count">0</span></div>
+      <div id="sources" class="source-list"></div>
+      <label class="add-reference" for="extra-images">+ 补充图片<input id="extra-images" type="file" accept="image/png,image/jpeg,image/webp" multiple></label>
+      <button id="add-reference-button" class="quiet-button" disabled>加入本次任务</button>
+    </aside>
+
+    <section class="canvas-workspace">
+      <div class="canvas-toolbar">
+        <div><span class="section-eyebrow">IMAGE CANVAS</span><b id="canvas-title">准备生成</b></div>
+        <div class="canvas-tools"><span id="canvas-image-label">商品参考图</span><span id="canvas-image-count">0 / 0</span></div>
+      </div>
+      <div class="artboard">
+        <div id="artboard-empty" class="artboard-empty"></div>
+        <div id="artboard-result" class="artboard-result"></div>
+        <button id="previous-image" class="canvas-nav previous" disabled aria-label="上一张图片">‹</button>
+        <button id="next-image" class="canvas-nav next" disabled aria-label="下一张图片">›</button>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-label"><span id="progress-text">等待开始</span><b id="progress-number">0%</b></div>
+        <div class="progress-track"><i id="progress-bar"></i></div>
+      </div>
+      <div id="generation-status" class="generation-status"></div>
+    </section>
+
+    <aside class="inspector" aria-label="生成设置">
+      <div class="inspector-title"><div><span class="section-eyebrow">IMAGE PACK</span><h1>生成设置</h1></div><span id="status-chip" class="status-chip">准备中</span></div>
+      <p id="scene-suggestion" class="scene-suggestion"></p>
+      <section class="generation-stage white-stage" aria-labelledby="white-stage-title">
+        <div class="stage-heading"><span>01</span><div><h2 id="white-stage-title">先生成基础图</h2><p>每张参考图都会得到一张清晰、纯白的商品图。</p></div></div>
+        <div class="white-summary"><b>合规白底图</b><small>适合作为平台首图</small></div>
+        <button id="start-white" class="primary-button stage-button">先生成白底图</button>
+      </section>
+      <section id="shot-planner" class="generation-stage display-stage" aria-labelledby="display-stage-title">
+        <div class="stage-heading"><span>02</span><div><h2 id="display-stage-title">再补充展示图</h2><p>按需要选择，可多选。</p></div></div>
+        <div class="shot-list">
+          <label class="shot-option"><input type="checkbox" name="shots" value="aiwhite" checked><span><b>精修白底图</b><small>提升清晰度、光感与自然阴影</small></span></label>
+          <label class="shot-option"><input type="checkbox" name="shots" value="lifestyle"><span><b>生活场景图</b><small>按品类自动匹配真实场景</small></span></label>
+          <label class="shot-option"><input type="checkbox" name="shots" value="model"><span><b>真人使用图</b><small>真人手持、佩戴或使用</small></span></label>
+          <label id="feature-option" class="shot-option"><input type="checkbox" name="shots" value="feature"><span><b>英文功能图</b><small>未填写时，仅提取图片中可见特点</small></span></label>
+          <label class="feature-claims">英文卖点（可选）<input id="feature-claims" maxlength="180" placeholder="例如：Genuine Leather · Drawstring Closure"></label>
+          <label class="shot-option"><input type="checkbox" name="shots" value="detail"><span><b>细节特写图</b><small>材质、结构与可见部位</small></span></label>
+          <label class="package-confirm"><input id="has-package-reference" type="checkbox"><span>我已上传包装或配件参考图</span></label>
+          <label id="package-option" class="shot-option"><input type="checkbox" name="shots" value="package"><span><b>包装与清单图</b><small>未补图时生成包装概念图，建议先补充</small></span></label>
+        </div>
+        <label class="scene-input">场景补充（可不填）<input id="scene-note" placeholder="例如：晨间通勤、简约办公室"></label>
+        <button id="start-codex" class="primary-button stage-button" disabled>生成已选展示图</button>
+        <p id="display-help" class="display-help">请先生成白底图，再选择展示图类型。</p>
+      </section>
+      <details class="generation-details">
+        <summary>生成详情 <span id="console-state">准备中</span></summary>
+        <pre id="console-log">系统已就绪，等待任务启动。</pre>
+      </details>
+    </aside>
+  </main>
+
+  <section class="deliverables">
+    <div class="deliverable-head"><div><span class="section-eyebrow">RESULTS</span><h2>已生成图片</h2></div><span id="result-count">0 张</span></div>
+    <div id="downloads" class="download-grid"></div>
+  </section>
+  <dialog id="regenerate-dialog" class="regenerate-dialog">
+    <form method="dialog">
+      <div class="dialog-head"><div><span class="section-eyebrow">REGENERATE IMAGE</span><h2>重新描述生成</h2></div><button class="dialog-close" value="cancel" aria-label="关闭">关闭</button></div>
+      <p id="regenerate-target" class="dialog-target"></p>
+      <label>这张图希望怎么修改？<textarea id="regenerate-prompt" rows="5" placeholder="例如：改成简约通勤咖啡店场景；保留商品外观、颜色和图案不变；自然晨光，画面更干净。"></textarea></label>
+      <p class="dialog-note">只会重新生成当前这一张图，商品结构、颜色、图案和配件会保持不变。</p>
+      <div class="dialog-actions"><button value="cancel" class="quiet-button">取消</button><button id="confirm-regenerate" value="default" class="primary-button">按新描述生成</button></div>
+    </form>
+  </dialog>
+  <dialog id="reference-warning-dialog" class="regenerate-dialog reference-warning-dialog">
+    <form method="dialog">
+      <div class="dialog-head"><div><span class="section-eyebrow">REFERENCE CHECK</span><h2>建议先补充资料</h2></div><button class="dialog-close" value="cancel" aria-label="关闭">关闭</button></div>
+      <div id="reference-warning-copy" class="reference-warning-copy"></div>
+      <p class="dialog-note">补充资料能让商品信息更准确；你也可以跳过，系统会只依据当前图片生成。</p>
+      <div class="dialog-actions"><button id="supplement-reference" class="quiet-button" value="cancel">先补充资料</button><button id="continue-without-reference" value="default" class="primary-button">按当前图继续</button></div>
+    </form>
+  </dialog>
+  <script src="/workspace.js"></script>
+</body>
+</html>

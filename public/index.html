@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>PIE STUDIO · 商品图片工作台</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body class="intake-page home-page">
+  <header class="site-header">
+    <a href="/" class="brand">PIE <span>/</span> STUDIO</a>
+    <nav aria-label="主导航">
+      <a class="is-active" href="#create">工作台</a>
+      <a href="#recent">图片包</a>
+      <a href="#platforms">规则中心</a>
+    </nav>
+    <a href="#create" class="header-action">新建图片包</a>
+  </header>
+
+  <main class="home-workspace">
+    <div class="workbench-heading">
+      <div>
+        <p class="kicker">PRODUCT IMAGE WORKBENCH</p>
+        <h1>商品图片工作台</h1>
+        <p>上传商品参考图，按目标平台整理成可上架的图片。</p>
+      </div>
+      <p class="heading-note">规则会随平台自动带入，生成后可继续补图和下载。</p>
+    </div>
+
+    <section class="home-dashboard" aria-label="商品图片工作台">
+      <form id="job-form" class="home-new-task">
+        <div class="panel-head">
+          <div><p class="section-eyebrow">NEW IMAGE PACK</p><h2>新建图片包</h2></div>
+          <span>从商品参考图开始</span>
+        </div>
+        <div class="new-task-body">
+          <div class="upload-block">
+            <label class="file-picker" for="images"><span>选择商品图片</span><em>JPG、PNG、WebP，可分次添加</em></label>
+            <input id="images" class="file-input" type="file" accept="image/png,image/jpeg,image/webp" multiple>
+            <div id="previews" class="previews home-previews"></div>
+          </div>
+          <div class="fields home-fields">
+            <label>销售平台<select id="platform"></select></label>
+            <label>商品品类<select id="category"><option>消费电子</option><option>家居生活</option><option>美妆个护</option><option>服装鞋包</option><option>宠物与玩具</option><option>其他商品</option></select></label>
+            <label>图片类型<select id="imageType"><option>白底首图</option><option>卖点图</option><option>AI 真人佩戴图</option><option>AI 真人手持图</option><option>无人产品场景图</option><option>包装与配件图</option></select></label>
+            <label>场景要求<input id="scene" placeholder="选填，例如：通勤、卧室、办公室"></label>
+          </div>
+          <div id="rule-card" class="rule-card home-rule-card"></div>
+          <button type="submit" class="launch-button home-launch"><span>创建图片包</span><i aria-hidden="true">→</i></button>
+        </div>
+      </form>
+
+      <section id="recent" class="home-recent" aria-label="继续处理">
+        <div class="panel-head">
+          <div><p class="section-eyebrow">RECENT WORK</p><h2>继续处理</h2></div>
+          <a href="#create">新建</a>
+        </div>
+        <div id="recent-jobs" class="recent-jobs" aria-live="polite">
+          <p class="recent-loading">正在读取已有图片包…</p>
+        </div>
+      </section>
+    </section>
+
+    <section id="platforms" class="home-rules" aria-label="平台规则速览">
+      <div class="rules-heading"><div><p class="section-eyebrow">PLATFORM RULES</p><h2>平台规则速览</h2></div><p>选择平台后，首图比例、背景与文字限制会自动带入任务。</p></div>
+      <div class="platform-strip">
+        <article><b>Amazon</b><span>2000 × 2000</span><p>白底，无首图文字</p></article>
+        <article><b>Temu</b><span>2000 × 2000</span><p>主体清楚、干净</p></article>
+        <article><b>AliExpress</b><span>800 × 800 起</span><p>完整展示商品</p></article>
+        <article><b>Mercado Libre</b><span>1200 × 1200 起</span><p>轮廓真实清晰</p></article>
+        <article><b>Shopee</b><span>1024 × 1024</span><p>移动端主体突出</p></article>
+        <article><b>SHEIN</b><span>按类目适配</span><p>场景、细节与搭配</p></article>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer"><span>PIE / STUDIO</span><span>跨境电商商品图片工作台</span></footer>
+  <script src="/app.js"></script>
+</body>
+</html>
